@@ -12,18 +12,18 @@ This project aims to reimplement the paper RePaint: Inpainting using Denoising D
 - Identify the specific result you aimed to reproduce and its significance in the context of the paper’s main contribution(s).
 - Include the relevant figure, table, or equation reference from the original paper.
 
-Due to resource constraints, we are unable to train an unconditional DDPM model from scratch. Instead, we will utilize pretrained models, and as a result, we focus on the CelebA-HQ dataset to reproduce:
+In the original paper, the authors trained a DDPM on the CelebA-HQ dataset for 250,000 iterations, which takes 5 days even on 4×V100 GPUs. Due to resource constraints and the fact that the RePaint algorithm is adaptable to various DDPMs, we utilize pretrained models and focus on the CelebA-HQ dataset to reproduce the following:
 
-- The visualization results using different masks similar to Figure 4
+- The visualization results using different masks presented in Figure 4:
   <img src="report/figure4.png" alt="figure4" width="50%"/>
 
-- The LPIPS results similar to Table 1
+- The LPIPS results in Table 1:
   ![table1](report/table1.png)
 
-- Ablation results on the effect of resampling steps and jump length – visualization similar to Figure 3/7
+- Ablation results on the effect of resampling steps and jump length demonstrated in Figures 3 and 7
   ![figure3](report/figure3.png)
 
-This includes reproduction of the paper’s main contribution, the Repaint method, as well as evaluation results that will serve as proof of the validity of our implementation.
+This includes the reproduction of the paper’s main contribution, the Repaint method, as well as the evaluation results that will serve as proof of the validity of our implementation.
 
 ## GitHub Contents
 
