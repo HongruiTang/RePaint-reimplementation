@@ -9,26 +9,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 from typing import List
 
-
 import os
 
 curr_dir = os.getcwd()
 print(curr_dir)
-output_dir = curr_dir + "/celeba-validation-images"  # adjust path as you like
-os.makedirs(output_dir, exist_ok=True)
 
-# 1. Load the validation split
-ds = load_dataset("korexyz/celeba-hq-256x256", split="validation")
-
-# 2b. Shuffle and select indices 0–39
-random40 = ds.shuffle().select(range(50))
-
-for i, example in enumerate(random40):
-    img = example["image"]
-    # if it’s a numpy array, convert to PIL
-    if not isinstance(img, Image.Image):
-        img = Image.fromarray(img)
-    img.save(os.path.join(output_dir, f"img_{i:02d}.jpg"))
 
 
 sample_to_pil = transforms.Compose(
@@ -131,7 +116,7 @@ if __name__ == "__main__":
     device = "cuda" if torch.cuda.is_available() else "cpu"
     model_id = "google/ddpm-celebahq-256"
 
-    imgs_dir = curr_dir + "/celeba-validation-images"
+    imgs_dir = curr_dir + "/data/celeba-validation-"
     generated_dir = curr_dir + "/generated"
     os.makedirs(generated_dir, exist_ok=True)
 
@@ -160,7 +145,7 @@ if __name__ == "__main__":
         ]
     )
 
-    mask = PIL.Image.open(curr_dir + "/" + "half.png")
+    mask = PIL.Image.open("./data/mask" + "/" + "half.png")
     mask = mask_transform(mask).to(device)
     imgs = os.listdir(imgs_dir)
     imgs.sort()  # ensures img_00.jpg, img_01.jpg, …
