@@ -7,11 +7,7 @@
 
 This project aims to reimplement the paper RePaint: Inpainting using Denoising Diffusion Probabilistic Models. RePaint is a diffusion-based image inpainting method that excels at filling in large or complex missing regions by repeatedly resampling during the reverse diffusion process. Unlike traditional diffusion models that follow a fixed backward trajectory, RePaint introduces jumps-steps where the model intentionally moves backward in time before continuing forward-allowing it to better explore plausible completions and maintain global coherence. This makes it particularly effective for challenging masks, such as alternating lines or irregular holes.
 
-(1) a conditioning method that does
-not require retraining the DDPM, (2) a resampling schedule
-that improves semantic coherence, and (3) strong empirical
-results that outperform GAN and autoregressive baselines
-on multiple mask types.
+The key contributions of the paper include: (1) a conditioning method that does not require retraining the DDPM, (2) a resampling schedule that improves semantic coherence, and (3) strong empirical results that outperform GAN and autoregressive baselines on multiple mask types.
 
 ## Chosen Result
 
@@ -75,8 +71,6 @@ implement your GitHub repo in a local environment.
 - GPU recommended. A CUDA-compatible GPU like A100 or T4. 
 - Pre-trained diffusion model (eg. ddpm-celebahq-256). you can download pre-trained models from [Huggingface](https://huggingface.co/google/ddpm-celebahq-256).
 
-
-
 **Step by step guide**:
 - Step 1: Clone the repository.
 ```
@@ -121,23 +115,20 @@ results with the original paper's results. As can be seen
 from the comparison, our output is similar to the output
 from the original paper in terms of the level of detail andsemantic correctness.
 
-![Visual Results](report/Visual\ Results.png)
+![Visual Results](report/Visual_Results.png)
 
 
 
 ### Evaluation Result
 
-In order to evaluate the performance of the model, we com-
-puted the LPIPS score of our model on different masks-
-lower LPIPS score are desirable as they indicate that image patches are perceptually similar. Table 1 shows the score from the original paper on the 2nd-to-last row, and our result on the last row.
+In order to evaluate the performance of the model, we computed the LPIPS score of our model on different masks-lower LPIPS score are desirable as they indicate that image patches are perceptually similar. Table 1 shows the score from the original paper on the 2nd-to-last row, and our result on the last row.
 
 ![CelebA-HQ_Quantitative_Results](report/CelebA-HQ_Quantitative_Results.png)
 
 ### Ablation Study
 
 We conducted an ablation study to observe the effect of
-using different jump lengths and resample steps on the re-
-sulting image. We arrived at a similar conclusion as the
+using different jump lengths and resample steps on the resulting image. We arrived at a similar conclusion as the
 original paper-increasing the resampling steps and jump
 length generates more harmonized images, but the benefits
 saturate at approximately r = 10 and j = 10.
@@ -146,7 +137,13 @@ saturate at approximately r = 10 and j = 10.
 
 ## Conclusion
 
-- Summarize the key takeaways from your re-implementation effort and the lessons learned.
+**Key Takeaways**:
+
+RePaint presents a novel conditioning method that enables pretrained unconditional diffusion models to perform inpainting across a wide variety of mask types. Its unified inference schedule ensures harmonization between known and generated regions, resulting in semantically coherent image completions. Our implementation successfully reproduced the original results on CelebA-HQ, achieving comparable LPIPS metrics across multiple mask types. Moreover, our ablation experiments revealed similar performance trends to those reported in the original paper, reinforcing the validity of RePaint’s design.
+
+**Lessons Learned**:
+
+One of the key lessons was the importance of assessing the computational feasibility of a project early on. While the RePaint method is elegant in theory, its iterative sampling procedure is resource-intensive, requiring thoughtful planning and resource management even when we are simply utilizing the base model at inference time instead of training deep models from scratch. Additionally, it was interesting to note that the intuition behind the RePaint method, including the effects of changing various hyperparameters, was actually quite straightforward, which is perhaps further testament to how simple ideas often work best, even in deep learning.
 
 ## References
 
