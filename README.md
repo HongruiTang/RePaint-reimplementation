@@ -31,7 +31,7 @@ This includes the reproduction of the paper's main contribution, the Repaint met
 
 ## GitHub Contents
 
-- `code/`: A directory containing the re-implementation code, along with any necessary configuration files or scripts.
+- `code/`: A directory containing the re-implementation code.
 
 - `data/`: A directory containing the datasets used for training and evaluation.
 
@@ -53,7 +53,7 @@ This includes the reproduction of the paper's main contribution, the Repaint met
 
 We reimplemented the RePaint inpainting method, which modifies the unconditional DDPM's reverse process by conditioning on known regions and resampling (jumping forward in the reverse process). Our approach directly uses a pre-trained ddpm-celebahq-256 model from Google, trained on the CelebA-HQ-256 dataset. No model retraining or architecture modifications were required.
 
-In our reimplementation:
+In our reimplementation, we focused on the following components:
 
 * Condition on known area: At each denoising step, noise is added to the known (unmasked) region, preserving its content. The UNet model predicts noise for the masked region, and these are combined to form the inpainted image.
 
@@ -69,6 +69,39 @@ implement your GitHub repo in a local environment.
 - Describe "how someone using your GitHub can re-implement your re-implementation?"
 - Provide instructions for running your code, including any dependencies, required libraries, and command-line arguments.
 - Specify the computational resources (e.g., GPU) needed to reproduce your results
+
+**Prerequisites**: 
+
+- GPU recommended. A CUDA-compatible GPU like A100 or T4. 
+- Pre-trained diffusion model (eg. ddpm-celebahq-256). you can download pre-trained models from [Huggingface](https://huggingface.co/google/ddpm-celebahq-256).
+
+
+
+**Step by step guide**:
+- Step 1: Clone the repository.
+```
+git clone https://github.com/HongruiTang/RePaint-reimplementation
+cd RePaint-reimplementation
+```
+
+- Step 2: Create and activate a virtual environment.
+```
+conda create -n repaint-env python=3.9 -y
+conda activate repaint-env
+```
+
+- Step 3: Install dependencies
+```
+pip install -r requirements.txt
+``` 
+
+- Step 4: Go to [code/repaint.py](code/repaint.py) file and run the code using 
+```
+python code/repaint.py
+```
+
+In code/repaint.py, you can specify different `resample_steps` and `jump_length` when creating the RePaint scheduler. We have provide some example masks in the data/mask directory which you can use directly. You are encouraged to create your own mask to evaluate the RePaint algorithm.
+
 
 ## Results/Insights
 

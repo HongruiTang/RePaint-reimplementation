@@ -150,7 +150,6 @@ if __name__ == "__main__":
     imgs = os.listdir(imgs_dir)
     imgs.sort()  # ensures img_00.jpg, img_01.jpg, …
 
-    # 3. Iterate over the first 20
     for img_file in imgs[:20]:
         path = os.path.join(imgs_dir, img_file)
         image = PIL.Image.open(path)
