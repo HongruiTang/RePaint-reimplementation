@@ -2,9 +2,6 @@
 
 ## Introduction
 
-- Purpose of this Git repo (mention how this is a project that attempts to re-implement your paper of choice)
-- Introduce the paper chosen and its main contribution.
-
 This project aims to reimplement the paper RePaint: Inpainting using Denoising Diffusion Probabilistic Models. RePaint is a diffusion-based image inpainting method that excels at filling in large or complex missing regions by repeatedly resampling during the reverse diffusion process. Unlike traditional diffusion models that follow a fixed backward trajectory, RePaint introduces jumps-steps where the model intentionally moves backward in time before continuing forward-allowing it to better explore plausible completions and maintain global coherence. This makes it particularly effective for challenging masks, such as alternating lines or irregular holes.
 
 The key contributions of the paper include: (1) a conditioning method that does not require retraining the DDPM, (2) a resampling schedule that improves semantic coherence, and (3) strong empirical results that outperform GAN and autoregressive baselines on multiple mask types.
