@@ -10,25 +10,25 @@ The key contributions of the paper include: (1) a conditioning method that does 
 
 In the original paper, the authors trained a DDPM on the CelebA-HQ dataset for 250,000 iterations, which takes 5 days even on 4×V100 GPUs. Due to resource constraints and the fact that the RePaint algorithm is adaptable to various DDPMs, we utilize pretrained models and focus on the CelebA-HQ dataset to reproduce the following:
 
-- The visualization results using different masks presented in Figure 4:
+- The visualization results using different masks is shown in the figure below:
 
   <img src="data/original_paper/figure4.png" alt="figure4" width="50%"/>
 
-- The LPIPS results in Table 1:
+- The LPIPS results in the table below:
   ![figure4](data/original_paper/table1.png)
 
-- Ablation results on the effect of resampling steps and jump length demonstrated in Figures 3
+- Ablation results on the effect of resampling steps and jump length demonstrated in this image:
   ![figure3](data/original_paper/figure3.png)
 
 This includes the reproduction of the paper's main contribution, the Repaint method, as well as the evaluation results that will serve as proof of the validity of our implementation.
 
 ## GitHub Contents
 
-- `code/`: A directory containing the re-implementation code.
+- `code/`: A directory containing the re-implementation code. `repaint.py` is the main file for the algorithm.
 
-- `data/`: A directory containing the datasets used for training and evaluation.
+- `data/`: A directory containing the datasets used for evaluation. This includes some randomly selected images from the CelebA-HQ dataset and mask images. 
 
-- `results/`: A directory containing the results of re-implementation, including generated figures, tables, or log files.
+- `results/`: A directory containing the results of re-implementation, including generated images, tables, and the result of our ablation experiments.
 
 - `poster/`: A directory containing a PDF of the poster used for in-class presentation.
 
@@ -85,10 +85,7 @@ In code/repaint.py, you can specify different `resample_steps` and `jump_length`
 
 ## Results/Insights
 
-- Present your re-implementation results as a comparison to the original paper's findings.
-- Describes "what can someone expect as the end-result of using your GitHub repo?"
-
-We achieved results comparable to those of the original paper on the CelebA-HQ dataset. In this section, we present our results and compare them to the original paper.A
+We achieved results comparable to those of the original paper on the CelebA-HQ dataset. In this section, we present our results and compare them to the original paper. 
 
 ### Visual Results
 
@@ -107,7 +104,7 @@ from the original paper in terms of the level of detail andsemantic correctness.
 
 ### Evaluation Result
 
-In order to evaluate the performance of the model, we computed the LPIPS score of our model on different masks-lower LPIPS score are desirable as they indicate that image patches are perceptually similar. Table 1 shows the score from the original paper on the 2nd-to-last row, and our result on the last row.
+In order to evaluate the performance of the model, we computed the LPIPS score of our model on different masks-lower LPIPS score are desirable as they indicate that image patches are perceptually similar. The following table shows the score from the original paper on the 2nd-to-last row, and our result on the last row.
 
 ![CelebA-HQ_Quantitative_Results](report/CelebA-HQ_Quantitative_Results.png)
 
@@ -120,6 +117,8 @@ length generates more harmonized images, but the benefits
 saturate at approximately r = 10 and j = 10.
 
 ![Ablation Study](report/Ablation.png)
+
+To reproduce our results, please follow the Reproduction Steps section, which will guide you through setting up the environment and running the code. For evaluating using the LPIPS score, we recommend referring to this [repository](https://github.com/richzhang/PerceptualSimilarity) for further details. This metric is to evaluate the distance between two images. Lower LPIPS scores indicate better perceptual similarity to the ground truth, and therefore, higher quality inpainted results. The expected reproduction result should closely resemble those shown above The generated images should be close to the original paper's result and natural to human observers across various mask types 
 
 ## Conclusion
 
