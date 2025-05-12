@@ -40,10 +40,6 @@ This includes the reproduction of the paper's main contribution, the Repaint met
 
 ## Re-implementation Details
 
-- Describe your approach to re-implementation or experimentation.
-- Include key details about models, datasets, tools, and evaluation metrics.
-- Mention any challenges or modifications made to the original approach.
-
 We reimplemented the RePaint inpainting method, which modifies the unconditional DDPM's reverse process by conditioning on known regions and resampling (jumping forward in the reverse process). Our approach directly uses a pre-trained ddpm-celebahq-256 model from Google, trained on the CelebA-HQ-256 dataset. No model retraining or architecture modifications were required.
 
 In our reimplementation, we focused on the following components:
@@ -55,13 +51,6 @@ In our reimplementation, we focused on the following components:
 * Performance Evaluation: We evaluated the method using LPIPS scores on CelebA-HQ-256, comparing our results with the original paper.
 
 ## Reproduction Steps
-
-As meta as this section is, it essentially documents steps someone would need to follow to
-implement your GitHub repo in a local environment.
-
-- Describe "how someone using your GitHub can re-implement your re-implementation?"
-- Provide instructions for running your code, including any dependencies, required libraries, and command-line arguments.
-- Specify the computational resources (e.g., GPU) needed to reproduce your results
 
 **Prerequisites**: 
 
@@ -149,4 +138,6 @@ One of the key lessons was the importance of assessing the computational feasibi
 
 ## Acknowledgements
 
-- Recognition goes a long way in setting up the context of your work. Your acknowledgements also act as an indirect validation about the quality of the work. For eg. having done this project as part of coursework is a sign that the work was potentially peer-reviewed or graded - i.e. added authenticity.
+This project was conducted as the final project of **CS5782 Introduction to Deep Learning** at Cornell University. We would like to thank Professor Kilian Weinberger and Professor Jennifer Sun for providing valuable guidance and feedback. We would also like to thank for helpful comments and suggestions provided by our peers and TAs in the peer-review poster session.
+
+We also acknowledge the authors of the original RePaint paper for making their work publicly available and inspiring our reimplementation efforts. The pre-trained models and datasets used in this project were sourced from publicly accessible repositories on Hugging Face. 
