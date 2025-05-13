@@ -86,6 +86,7 @@ python code/repaint.py
 
 In code/repaint.py, you can specify different `resample_steps` and `jump_length` when creating the RePaint scheduler. We have provide some example masks in the data/mask directory which you can use directly. You are encouraged to create your own mask to evaluate the RePaint algorithm.
 
+The generated images will be found in the /generated folder.
 
 ## Results/Insights
 
