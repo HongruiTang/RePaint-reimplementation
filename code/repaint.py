@@ -1,4 +1,3 @@
-from datasets import load_dataset
 from PIL import Image
 import torch
 from diffusers import UNet2DModel, DDPMScheduler
