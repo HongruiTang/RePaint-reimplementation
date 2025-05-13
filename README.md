@@ -12,7 +12,7 @@ Probabilistic Models (DDPM)
 
 ## Chosen Result
 
-In the original paper, the authors trained a DDPM on the CelebA-HQ dataset for 250,000 iterations, which takes 5 days even on 4×V100 GPUs. Due to resource constraints and the fact that the RePaint algorithm is adaptable to various DDPMs, we utilize pretrained models and focus on the CelebA-HQ dataset to reproduce the following:
+In the original paper, the authors trained a DDPM on the CelebA-HQ dataset for 250,000 iterations, which takes 5 days even on 4×V100 GPUs. Due to resource constraints and the fact that the RePaint algorithm is adaptable to various DDPMs, we utilize pretrained model on the CelebA-HQ dataset (`ddpm-celebahq-256` from Hugging Face) to reproduce the following:
 
 - The visualization results using different masks is shown in the figure below:
 
@@ -44,15 +44,15 @@ This includes the reproduction of the paper's main contribution, the Repaint met
 
 ## Re-implementation Details
 
-We reimplemented the RePaint inpainting method, which modifies the unconditional DDPM's reverse process by conditioning on known regions and resampling (jumping forward in the reverse process). Our approach directly uses a pre-trained ddpm-celebahq-256 model from Google, trained on the CelebA-HQ-256 dataset. No model retraining or architecture modifications were required.
+We reimplemented the RePaint inpainting method, which modifies the unconditional DDPM's reverse process by conditioning on known regions and resampling (jumping forward in the reverse process). Our approach directly uses a pre-trained `ddpm-celebahq-256` model from Google, trained on the CelebA-HQ-256 dataset. No model retraining or architecture modifications were required.
 
 In our reimplementation, we focused on the following components:
 
-* Condition on known area: At each denoising step, noise is added to the known (unmasked) region, preserving its content. The UNet model predicts noise for the masked region, and these are combined to form the inpainted image.
+- **Condition on known area**: At each denoising step $t$, noise is added to the known (unmasked) region, while a UNet model predicts noise added to the masked region. These are combined to form the inpainted image $x_{t-1}$.
 
-* Bidirectional Resampling: To enhance semantic consistency, we introduced a resampling step where the inpainted region is noised and denoised multiple times. For efficiency, we applied resampling every 10 reverse steps, experimenting with different forward jump lengths.
+- **Bidirectional Resampling**: To enhance semantic consistency, we introduced a resampling step where the inpainted region is noised and denoised multiple times. For efficiency, we applied resampling every 10 reverse steps, experimenting with different forward jump lengths.
 
-* Performance Evaluation: We evaluated the method using LPIPS scores on CelebA-HQ-256, comparing our results with the original paper.
+- **Performance Evaluation**: We evaluated the method using LPIPS scores on CelebA-HQ-256, comparing our results with the original paper.
 
 ## Reproduction Steps
 
@@ -70,7 +70,7 @@ cd RePaint-reimplementation
 
 - Step 2: Create and activate a virtual environment.
 ```
-conda create -n repaint-env python=3.9 -y
+conda create -n repaint-env python=3.10 -y
 conda activate repaint-env
 ```
 
@@ -106,9 +106,9 @@ from the original paper in terms of the level of detail andsemantic correctness.
 
 
 
-### Evaluation Result
+### Quantatitive Result
 
-In order to evaluate the performance of the model, we computed the LPIPS score of our model on different masks-lower LPIPS score are desirable as they indicate that image patches are perceptually similar. The following table shows the score from the original paper on the 2nd-to-last row, and our result on the last row.
+In order to evaluate the performance of the model, we computed the LPIPS score of our model on different masks-lower LPIPS score are more desirable as they indicate that image patches are perceptually similar. The following table shows the score from the original paper on the first row, and our result on the last row.
 
 ![CelebA-HQ_Quantitative_Results](report/CelebA-HQ_Quantitative_Results.png)
 
@@ -122,7 +122,7 @@ saturate at approximately r = 10 and j = 10.
 
 ![Ablation Study](report/Ablation.png)
 
-To reproduce our results, please follow the Reproduction Steps section, which will guide you through setting up the environment and running the code. For evaluating using the LPIPS score, we recommend referring to this [repository](https://github.com/richzhang/PerceptualSimilarity) for further details. This metric is to evaluate the distance between two images. Lower LPIPS scores indicate better perceptual similarity to the ground truth, and therefore, higher quality inpainted results. The expected reproduction result should closely resemble those shown above The generated images should be close to the original paper's result and natural to human observers across various mask types 
+To reproduce our results, please follow the Reproduction Steps section, which will guide you through setting up the environment and running the code. For evaluating using the LPIPS score, we recommend referring to [LPIPS repo](https://github.com/richzhang/PerceptualSimilarity) for further details. This metric evaluates the distance between two images. Lower LPIPS scores indicate better perceptual similarity to the ground truth, and therefore, higher quality inpainted results. The expected reproduction result should closely resemble those shown above. The generated images should be close to the original paper's result and natural to human observers across various mask types 
 
 ## Conclusion
 
