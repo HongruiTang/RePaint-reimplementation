@@ -58,7 +58,7 @@ In our reimplementation, we focused on the following components:
 
 **Prerequisites**: 
 
-- GPU recommended. A CUDA-compatible GPU like A100 or T4. 
+- GPU recommended. A CUDA-compatible GPU like A100 or T4, or MacOS compatible GPU.
 - Pre-trained diffusion model (eg. ddpm-celebahq-256). you can download pre-trained models from [Huggingface](https://huggingface.co/google/ddpm-celebahq-256).
 
 **Step by step guide**:

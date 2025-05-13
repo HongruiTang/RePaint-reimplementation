@@ -1,19 +1,20 @@
-from PIL import Image
 import torch
-from diffusers import UNet2DModel, DDPMScheduler
-from torchvision import transforms
 import PIL.Image
-from tqdm import tqdm
+from PIL import Image
 import numpy as np
-import matplotlib.pyplot as plt
+from tqdm import tqdm
 from typing import List
+import matplotlib.pyplot as plt
+from torchvision import transforms
+from diffusers import UNet2DModel, DDPMScheduler
 
 import os
 
 curr_dir = os.getcwd()
-print(curr_dir)
-
-
+imgs_dir = curr_dir + "/data/celeba-validation-samples"
+generated_dir = curr_dir + "/generated"
+os.makedirs(generated_dir, exist_ok=True)
+print("Results saved to", generated_dir)
 
 sample_to_pil = transforms.Compose(
     [
@@ -106,18 +107,20 @@ def repaint(
             result = result.squeeze(0).cpu()
             result = (result + 1) / 2
             result = transforms.ToPILImage()(result.clamp(0, 1))
-            result.save(f"result_{t}.png")
+            result.save(generated_dir + "/" + f"result_{t}.png")
 
     return x
 
 
 if __name__ == "__main__":
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    if torch.cuda.is_available():
+        device = "cuda" 
+    elif torch.backends.mps.is_available():
+        device = torch.device("mps")
+    else:
+        device = "cpu"
+    print("Using", device)
     model_id = "google/ddpm-celebahq-256"
-
-    imgs_dir = curr_dir + "/data/celeba-validation-"
-    generated_dir = curr_dir + "/generated"
-    os.makedirs(generated_dir, exist_ok=True)
 
     model = UNet2DModel.from_pretrained("google/ddpm-celebahq-256").to(device).eval()
     ddpm_scheduler = DDPMScheduler.from_pretrained(model_id)
@@ -144,12 +147,12 @@ if __name__ == "__main__":
         ]
     )
 
-    mask = PIL.Image.open("./data/mask" + "/" + "half.png")
+    mask = PIL.Image.open("./data/mask" + "/" + "every_2nd_line.png")
     mask = mask_transform(mask).to(device)
     imgs = os.listdir(imgs_dir)
     imgs.sort()  # ensures img_00.jpg, img_01.jpg, …
 
-    for img_file in imgs[:20]:
+    for img_file in imgs:
         path = os.path.join(imgs_dir, img_file)
         image = PIL.Image.open(path)
 
